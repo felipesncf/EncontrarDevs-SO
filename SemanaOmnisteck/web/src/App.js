@@ -41,8 +41,8 @@ function App() {
     loadDevs();
   }, []);
 
-  async function handleAddDev(e){
-    e.preventDesfault();
+  async function handleAddDev(){
+    //e.preventDesfault();
     const response = await api.post('/devs', {
       github_username,
       techs,
@@ -51,6 +51,8 @@ function App() {
     });
     setGithubUsername('');
     setTechs('');
+
+    setDevs([...devs, response.data]);
   }
 
   return (
@@ -109,7 +111,7 @@ function App() {
       <main>
         <ul>
           {devs.map(dev => (
-            <li className="dev-item">
+            <li key={dev._id} className="dev-item">
               <header>
                 <img src={dev.avatar_url} alt={dev.name}/>
 
